@@ -11,7 +11,7 @@ dp.include_router(router)
 
 
 async def main():
-    await DbOperations.delete_db()
+    # await DbOperations.delete_db()
     await DbOperations.create_db()
     await dp.start_polling(bot)
 

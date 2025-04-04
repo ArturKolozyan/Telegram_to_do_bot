@@ -10,8 +10,8 @@ main = ReplyKeyboardMarkup(
 
 tasks = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text='Добавить задачу')],
-        [KeyboardButton(text='Удалить задачу')],
+        [KeyboardButton(text='Задачи')],
+        [KeyboardButton(text='Добавить задачу'), KeyboardButton(text='Удалить задачу')],
         [KeyboardButton(text='Назад')]
     ],
     resize_keyboard=True

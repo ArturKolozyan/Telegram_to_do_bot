@@ -39,7 +39,7 @@ class DbFunctions:
                 await session.execute(stmt)
                 await session.commit()
             except IntegrityError:
-                return None
+                return
 
     @staticmethod
     async def all_tasks(tg_id):
@@ -48,7 +48,6 @@ class DbFunctions:
             result = await session.execute(stmt)
             user = result.scalars().first()
             tasks = user.tasks
-            print(tasks)
             return tasks
 
     @staticmethod
@@ -64,6 +63,8 @@ class DbFunctions:
             stmt = select(Users).options(selectinload(Users.tasks)).where(Users.tg_id == tg_id)
             result = await session.execute(stmt)
             user = result.scalars().first()
-            task = user.tasks[task_i]
+            task = user.tasks[int(task_i) - 1]
             await session.delete(task)
             await session.commit()
+
+

@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher
 
 from config import BOT_TOKEN
 from app.handlers import router
-from db.db import create_db, delete_db
+from db.db import DbOperations
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -11,8 +11,8 @@ dp.include_router(router)
 
 
 async def main():
-    await delete_db()
-    await create_db()
+    await DbOperations.delete_db()
+    await DbOperations.create_db()
     await dp.start_polling(bot)
 
 

@@ -48,7 +48,7 @@ async def all_tasks_handler(message: Message):
 
 @router.message(F.text == 'Добавить задачу')
 async def add_task_handler_1(message: Message, state: FSMContext):
-    await message.answer('Напишите заголовок задачи', reply_markup=kb.task_add)
+    await message.answer('Напишите заголовок задачи', reply_markup=kb.back)
     await state.set_state(TaskCreate.title)
 
 
@@ -86,7 +86,7 @@ async def delete_task_handler_2(message: Message, state: FSMContext):
     task_i = message.text
 
     if not task_i.isdigit():
-        await message.answer('Некорректный номер задачи. Пожалуйста, введите число')
+        await message.answer('Некорректный номер задачи. Пожалуйста, введите число', reply_markup=kb.back)
         return
 
     task_i = int(task_i)
@@ -94,10 +94,9 @@ async def delete_task_handler_2(message: Message, state: FSMContext):
     data = await state.get_data()
     tasks = data.get('tasks')
     if task_i < 1 or task_i > len(tasks):
-        await message.answer('Некорректный номер задачи. Пожалуйста, введите существующий номер задачи')
+        await message.answer('Некорректный номер задачи. Пожалуйста, введите существующий номер задачи', reply_markup=kb.back)
         return
 
     await DbFunctions.delete_task(message.from_user.id, task_i=task_i)
-    await message.answer(f'Удалена задача номер {task_i}')
+    await message.answer(f'Удалена задача номер {task_i}', reply_markup=kb.tasks)
     await state.clear()
-

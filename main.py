@@ -1,9 +1,10 @@
 import asyncio
+import logging
 from aiogram import Bot, Dispatcher
 
 from config import BOT_TOKEN
 from app.handlers import router
-from db.db import DbOperations
+# from db.db import DbOperations
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -11,8 +12,9 @@ dp.include_router(router)
 
 
 async def main():
+    logging.basicConfig(level='INFO')
     # await DbOperations.delete_db()
-    await DbOperations.create_db()
+    # await DbOperations.create_db()
     await dp.start_polling(bot)
 
 
